@@ -1,0 +1,15 @@
+@import '../../styles/_variables.scss';
+
+.header {
+    width: 100%;
+    background-color: $color-bg-default;
+    box-shadow: $shadow-md;
+    padding: $spacing-sm $spacing-md;
+
+    h1 {
+        font-family: $font-family-heading;
+        color: $color-text-primary-light;
+        font-weight: $font-weight-medium;
+        font-size: $font-size-xxl;
+    }
+}

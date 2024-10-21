@@ -1,0 +1,25 @@
+@import "./variables";
+
+
+.listProducts_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+
+  h2 {
+    font-family: $font-family-heading;
+    color: $color-text-primary-dark;
+    letter-spacing: $letter-spacing-light;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-xl;
+  }
+
+  .listProducts_buttons {
+    display: flex;
+  }
+}
+
+.listProducts_content {
+  width: 100%;
+}

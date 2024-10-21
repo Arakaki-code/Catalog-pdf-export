@@ -1,0 +1,20 @@
+@import "./variables";
+
+.container_category {
+
+
+}
+
+.category_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+        font-family: $font-family-heading;
+        color: $color-text-primary-dark;
+        letter-spacing: $letter-spacing-light;
+        font-weight: $font-weight-medium;
+        font-size: $font-size-xl;
+      }
+}

@@ -1,0 +1,117 @@
+@import "../styles/variables";
+
+
+/* Box-sizing reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set core body defaults */
+body {
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $color-bg-surface-light;
+  color: #333;
+  text-rendering: optimizeLegibility;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  outline: none;
+}
+
+/* Ensure buttons don't get too much style */
+button {
+  background: none;
+  cursor: pointer;
+}
+
+/* Remove all default styles on lists */
+ul,
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Anchor reset */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:focus {
+  outline: none;
+}
+
+/* Remove table border spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove form element margins */
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Set a more modern default for text overflow */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Ensure full height for containers */
+html,
+body {
+  height: 100%;
+}
+
+/* Default styles for headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+}
+
+/* Reset for blockquote */
+blockquote {
+  margin: 0;
+  padding: 0;
+  border-left: 4px solid #ccc;
+  padding-left: 1em;
+  color: #555;
+}

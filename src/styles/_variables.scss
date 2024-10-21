@@ -1,0 +1,100 @@
+// Cores principais
+$color-primary-light: #647BA6; // Cor principal clara
+$color-primary-medium: #5a719b; // Cor principal média
+$color-primary-dark: #2D3D5B; // Cor principal escura
+
+// Cores de fundo
+$color-bg-transparent: transparent;
+$color-bg-default: #fff; // Cor de fundo padrão
+$color-bg-surface-light: #eeeff2; // Cor de fundo superfície clara
+$color-bg-surface-dark: #e7e7e7; // Cor de fundo superfície escura
+
+// Cores de texto
+$color-text-primary-light: #6e8dc7; // Texto principal claro
+$color-text-primary-medium: #5a719b; // Texto principal claro
+$color-text-primary-dark: #2D3D5B; // Texto principal escuro
+$color-text-heading: #212121; // Título
+$color-text-body: #424242; // Corpo de texto
+$color-text-placeholder: #9c9c9c; // Texto placeholder
+$color-text-label: #7a7a7a; 
+$color-text-light: #fff; // Texto inverso (geralmente sobre fundos escuros)
+
+// Cores de feedback
+$color-success: #28a745;
+$color-error: #dc3545;
+$color-warning: #ffc107;
+$color-info: #17a2b8;
+
+// Botões
+$button-border-radius: 4px;
+$button-hover-bg: #fff;
+
+// Tipografia
+$font-family-heading: "Inter", sans-serif;
+$font-size-root: 16px; // Tamanho base
+$font-size-xs: 0.72rem; // 11px
+$font-size-sm: 0.875rem; // 14px
+$font-size-md: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-xxl: 1.6rem; // 28px
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 600;
+$font-weight-bold: 700;
+$line-height-default: 1.5;
+$line-height-heading: 1.2;
+$letter-spacing-light: 0.5px;
+
+// Espaçamentos
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem; // 8px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.4rem; // 22px
+$spacing-xl: 2rem; // 32px
+$spacing-xxl: 3rem; // 48px
+$spacing-form-label: 0.3rem;
+
+// Dimensões
+$container-max-width: 1200px;
+$container-padding: $spacing-lg;
+$height-full: 100vh;
+$input-height: 2.4rem;
+$button-height: 2.5rem;
+
+// Bordas e Radius
+$border-none: 0;
+$border-radius-sm: 0.25rem; // 4px
+$border-radius-md: 0.5rem; // 8px
+$border-radius-lg: 1rem; // 16px
+$border-width-default: 1px;
+$border-color-default: #ddd;
+
+// Sombras
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+$shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.2);
+
+// Z-Index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Transições
+$transition-fast: 0.2s ease-in-out;
+$transition-medium: 0.4s ease-in-out;
+$transition-slow: 0.6s ease-in-out;
+
+// Breakpoints para responsividade
+$breakpoint-xs: 320px; // Extra pequeno
+$breakpoint-sm: 576px; // Pequeno
+$breakpoint-md: 768px; // Médio
+$breakpoint-lg: 992px; // Grande
+$breakpoint-xl: 1200px; // Extra grande

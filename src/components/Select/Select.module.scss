@@ -1,0 +1,76 @@
+@import "../../styles/variables";
+
+.select_container {
+  gap: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  cursor: pointer;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  select {
+    background-color: transparent;
+    cursor: pointer;
+  }
+}
+
+.primary {
+  background-color: transparent;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-sm;
+  padding: $spacing-sm $spacing-sm;
+  transition: 0.3s;
+
+  select {
+    color: $color-text-primary-medium;
+    
+  }
+
+  .icon > svg {
+    color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-primary-dark;
+    box-shadow: $shadow-lg;
+
+    .icon > svg {
+      color: $color-text-light;
+    }
+
+    select {
+      color: $color-text-light;
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+    filter: brightness(1.4);
+  }
+}
+
+.secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  label {
+    color: $color-text-label;
+    font-size: $font-size-xs;
+    letter-spacing: $letter-spacing-light;
+  }
+
+  .select {
+    background-color: $color-bg-surface-light;
+    padding: $spacing-sm $spacing-sm;
+    border-radius: $border-radius-sm;
+  }
+
+}

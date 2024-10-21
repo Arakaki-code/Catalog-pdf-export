@@ -1,0 +1,47 @@
+@import "../../styles/variables";
+
+.card_container {
+  width: 100%;
+  min-height: 70px;
+  height: 70px;
+  display: flex;
+  background-color: $color-bg-default;
+  box-shadow: $shadow-md;
+  margin-bottom: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+
+  &:hover{
+
+    box-shadow: none;
+  }
+  
+
+
+  .card_container_product {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr ;
+    align-items: center;
+    text-align: left;
+  }
+
+  .card_container_category {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    align-items: center;
+    text-align: left;
+  }
+
+  img {
+    object-fit: contain;
+    overflow: hidden;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

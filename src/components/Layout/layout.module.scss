@@ -1,0 +1,28 @@
+
+@import "../../styles/_variables.scss";
+
+$navbar-width: 240px;
+$header-height: 80px;
+  .layout {
+    display: grid;
+    grid-template-columns: $navbar-width 1fr;
+    grid-template-rows: $header-height 1fr;
+    grid-template-areas: 
+    "navbar header"
+    "navbar content";
+  }
+  
+  .layout_navbar {
+    grid-area: navbar;
+  }
+  
+  .layout_header {
+    grid-area: header;
+  }
+  
+  .layout_content {
+    grid-area: content;
+    padding: 0 $spacing-md; 
+    background-color: $color-bg-surface-light;
+  }
+  

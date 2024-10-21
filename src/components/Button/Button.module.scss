@@ -1,0 +1,157 @@
+@import "../../styles/_variables.scss";
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  padding: $spacing-sm $spacing-md;
+  transition: 0.3s;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.primary {
+  background-color: transparent;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-sm;
+  color: $color-text-primary-medium;
+  transition: 0.3s;
+
+  .icon {
+    margin-right: 0.3rem;
+
+    & > svg {
+      color: $color-text-primary-medium;
+    }
+  }
+
+  &:hover {
+    background-color: $color-primary-dark;
+    box-shadow: $shadow-lg;
+    color: $color-text-light;
+
+    .icon > svg {
+      color: $color-text-light;
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+    filter: brightness(1.4);
+  }
+}
+
+.secondary {
+
+  padding: 5px 0;
+  font-size: $font-size-sm;
+  color: $color-primary-medium;
+  text-wrap: nowrap;
+  letter-spacing: $letter-spacing-light;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+.icon_edit {
+  background-color: transparent;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm $spacing-sm;
+  color: $color-text-primary-dark;
+  transition: 0.3s;
+
+  .icon {
+    font-size: 22px;
+
+    & > svg {
+      color: $color-text-primary-medium;
+    }
+  }
+
+  &:hover {
+    background-color: $color-primary-dark;
+    color: $color-text-light;
+
+    .icon > svg {
+      color: $color-text-light;
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+    filter: brightness(1.4);
+  }
+}
+
+.icon_red { 
+  background-color: transparent;
+  border-radius: $border-radius-sm;
+  padding: $spacing-sm $spacing-sm;
+  transition: 0.3s;
+
+  .icon {
+    font-size: 22px;
+
+    & > svg {
+      color: #bf4342;
+
+    }
+  }
+
+  &:hover {
+    background-color: #bf4342;
+    color: $color-text-light;
+
+    .icon {
+      & > svg {
+        color: $color-text-light;
+      }
+    }
+  }
+
+  &:active {
+    filter: brightness(1.4);
+    box-shadow: none;
+  }
+}
+
+.icon_close { 
+  background-color: transparent;
+  border-radius: $border-radius-sm;
+  padding: $spacing-xs $spacing-xs;
+  transition: 0.3s;
+
+  .icon {
+    font-size: 20px;
+
+    & > svg {
+      color: #bf4342;
+
+    }
+  }
+
+  &:hover {
+    background-color: #bf4342;
+    color: $color-text-light;
+
+    .icon {
+      & > svg {
+        color: $color-text-light;
+      }
+    }
+  }
+
+  &:active {
+    filter: brightness(1.4);
+    box-shadow: none;
+  }
+}
+
+

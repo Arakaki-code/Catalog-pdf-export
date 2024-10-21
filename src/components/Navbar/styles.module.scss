@@ -1,0 +1,15 @@
+@import "../../styles/variables";
+
+.navbar {
+  height: $height-full;
+  background-color: $color-primary-light;
+
+  .navbar_links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $color-primary-medium;
+    color: $color-text-light;
+    padding: $spacing-md 0;
+  }
+}
