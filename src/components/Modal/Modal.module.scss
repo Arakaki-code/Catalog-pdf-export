@@ -6,7 +6,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.65);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -15,13 +15,18 @@
   .modal_content {
     width: 100%;
     max-width: 600px;
+    max-height: 95vh; /* Altura máxima do modal */
+    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
     background-color: $color-bg-default;
     border-radius: $border-radius-lg;
-    padding: $spacing-lg $spacing-xl;
-    gap: 20px;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      display: none; /* Oculta a barra de rolagem no Chrome/Safari */
+    }
   }
 }
 
@@ -30,14 +35,20 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: $spacing-sm $spacing-md;
+  background-color: $color-primary-light;
+  border-radius: $border-radius-lg $border-radius-lg 0 0;
 
   h2 {
     font-family: $font-family-heading;
     font-size: $font-size-xl;
     font-weight: $font-weight-medium;
-    color: $color-text-primary-medium;
+    color: $color-text-light;
     letter-spacing: $letter-spacing-light;
   }
 }
 
+.modal_body {
+  padding: $spacing-lg;
 
+}

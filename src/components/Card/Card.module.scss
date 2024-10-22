@@ -15,6 +15,17 @@
     box-shadow: none;
   }
   
+    img {
+      object-fit: contain;
+      overflow: hidden;
+    }
+  
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
 
 
   .card_container_product {
@@ -33,15 +44,17 @@
     align-items: center;
     text-align: left;
   }
-
-  img {
-    object-fit: contain;
-    overflow: hidden;
-  }
-
-  .actions {
-    display: flex;
+  
+  .card_container_variations{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr ;
     align-items: center;
-    justify-content: center;
+    text-align: left;
+
+    .code{
+      font-size: $font-size-xs;
+      color: $color-text-label;
+    }
   }
 }

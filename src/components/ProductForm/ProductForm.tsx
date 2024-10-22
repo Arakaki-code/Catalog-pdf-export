@@ -1,14 +1,18 @@
 import styles from "./ProductForm.module.scss";
-import React, { FormEvent, useRef, useState } from "react";
-import { Product } from "../../hooks/useProducts";
+import React, { FormEvent, useState } from "react";
+import { Product, ProductVariation } from "../../hooks/useProducts";
 import Input from "../Input/Input";
 import ImageCard from "../ImageCard/ImageCard";
 import Select from "../Select/Select";
+import DivisorLine from "../DivisorLine/DivisorLine";
+import CardProduct from "../Card/Card";
+import Button from "../Button/Button";
+import { GiSaveArrow } from "react-icons/gi";
 
 interface ProductFormProps {
-  initialData?: Product; // Dados iniciais para edição, opcional
-  onSubmit: (data: Product) => void; // Função chamada ao enviar o formulário
-  submitButtonLabel?: string; // Rótulo customizável para o botão de submit
+  initialData?: Product;
+  onSubmit: (data: Product) => void;
+  submitButtonLabel?: string;
 }
 
 const optionsCategory = [
@@ -23,26 +27,90 @@ const ProductForm: React.FC<ProductFormProps> = ({
     code: "",
     description: "",
     category: "",
+    variations: [],
   },
   onSubmit,
   submitButtonLabel = "Salvar",
 }) => {
   const [formData, setFormData] = useState<Product>(initialData);
+  const [newVariation, setNewVariation] = useState<ProductVariation>({
+    code: "",
+    description: "",
+    price: 0,
+    unit: "",
+  });
+
+  // verificar se o botão deve estar desabilitado
+  const isFormIncomplete = () => {
+    return (
+      formData.variations.length === 0 ||
+      formData.image.trim() === "" ||
+      formData.description.trim() === "" ||
+      formData.category.trim() === ""
+    );
+  };
+  const isSaveButtonDisabled = isFormIncomplete();
+  
+
+  const generateUniqueCode = () => `${Math.random().toString(36).substring(2, 10)}`;
+
+
+  const handleNewVariationChange = (
+    field: keyof ProductVariation,
+    value: string | number
+  ) => {
+    setNewVariation((prev) => ({ ...prev, [field]: value }));
+  };
+
+
+  const addVariation = () => {
+    if (
+      !newVariation.description ||
+      newVariation.price <= 0 ||
+      !newVariation.unit
+    ) {
+      alert("Adicionar ao menos uma variação.");
+      return;
+    }
+
+    const variationWithCode = {
+      ...newVariation,
+      code: generateUniqueCode(),
+    };
+
+    setFormData((prev) => ({
+      ...prev,
+      variations: [...prev.variations, variationWithCode],
+    }));
+
+    setNewVariation({
+      code: "",
+      description: "",
+      price: 0,
+      unit: newVariation.unit,
+    });
+  };
+
+  const formatCurrency = (value: string) => {
+    // Remove caracteres não numéricos
+    const numericValue = value.replace(/\D/g, "");
+    // Converte para float e formata como moeda
+    const formattedValue = (parseFloat(numericValue) / 100)
+      .toFixed(2)
+      .replace(".", ",");
+    return formattedValue;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev: any) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (value: string | number) => {
-    setFormData((prev) => ({ ...prev, category: value as string }));
-  };
+  const handleSubmit = (e?: FormEvent) => {
+    if (e) e.preventDefault();
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    const { image, code, description, category } = formData;
-    if (!image || !code || !description || !category) {
+    const { image, description, category } = formData;
+    if (!image || !description || !category) {
       alert("Preencha todos os campos corretamente.");
       return;
     }
@@ -52,54 +120,106 @@ const ProductForm: React.FC<ProductFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={styles.product_main_content}>
-        <ImageCard
-          className={styles.product_image}
-          src={formData.image}
-          onRemove={() => setFormData({ ...formData, image: "" })}
-          onChange={(image) => setFormData({ ...formData, image })}
-        />
-
+    <form className={styles.formulario} onSubmit={handleSubmit}>
+      <div className={styles.product_main_fields}>
         <div className={styles.main_form}>
-          <Input
-            label="Código"
-            name="code"
-            className={styles.product_code}
-            value={formData.code}
-            onChange={handleChange}
-            placeholder="Código do produto"
-          />
-          <Select
-            label="Categoria"
-            name="category"
-            className={styles.product_category}
-            options={optionsCategory}
-            onChange={handleSelectChange}
-            value={formData.category}
-            placeholder={"Selecionar categoria"}
-            selectStyles="secondary"
-          />
-          
           <Input
             label="Produto"
             name="description"
             className={styles.product_description}
             value={formData.description}
             onChange={handleChange}
-            placeholder="Descrição do produto"
+            placeholder="Nome do produto"
           />
-
-          
+          <Select
+            label="Categoria"
+            name="category"
+            className={styles.product_category}
+            options={optionsCategory}
+            onChange={(value) =>
+              setFormData((prev) => ({ ...prev, category: value as string }))
+            }
+            value={formData.category}
+            placeholder="Selecionar categoria"
+            selectStyles="secondary"
+          />
         </div>
+        <ImageCard
+          className={styles.product_image}
+          src={formData.image}
+          onRemove={() => setFormData({ ...formData, image: "" })}
+          onChange={(image) => setFormData({ ...formData, image })}
+        />
       </div>
 
-      <button
-        type="submit"
-        style={{ marginTop: "1rem", padding: "0.5rem 1rem" }}
-      >
-        {submitButtonLabel}
-      </button>
+      <DivisorLine />
+
+      <h4>Variações do Produto</h4>
+      <div className={styles.product_variation_fields}>
+        <Input
+          label="Variação do produto"
+          name="variation-description"
+          value={newVariation.description}
+          onChange={(e) =>
+            handleNewVariationChange("description", e.target.value)
+          }
+          placeholder="Descrição do produto"
+        />
+        <Input
+          label="Preço"
+          name="variation-price"
+          type="text"
+          value={formatCurrency(newVariation.price.toString())}
+          onChange={(e) => handleNewVariationChange("price", e.target.value)}
+          placeholder="R$ 0,00"
+        />
+
+        <Input
+          label="Unidade"
+          name="variation-unit"
+          value={newVariation.unit}
+          onChange={(e) => handleNewVariationChange("unit", e.target.value)}
+          placeholder="Uni. | Pçs. | Kg."
+        />
+      </div>
+
+      <div className={styles.buttons_form}>
+        <Button
+          icon={<GiSaveArrow />}
+          btnStyle={"primary"}
+          onClick={addVariation}
+        >
+          Adicionar Variação do Produto
+        </Button>
+        <Button
+          btnStyle={"primary"}
+          disabled={isSaveButtonDisabled}
+          onClick={() => handleSubmit()}
+        >
+          {submitButtonLabel}
+        </Button>
+      </div>
+
+      <div className={styles.list_variations}>
+        {formData.variations.length > 0 ? (
+          formData.variations.map((variation, index) => (
+            <CardProduct
+              key={index}
+              isVariationMode
+              code={variation.code}
+              description={variation.description}
+              price={formatCurrency(variation.price.toString())}
+              unit={variation.unit}
+              onEdit={() => "editando"}
+              onDelete={() => "deletando"}
+            />
+          ))
+        ) : (
+          <span className={styles.list_variations_span}>
+            Adicione ao menos uma variação do produto para salvar
+          </span>
+        )}
+      </div>
     </form>
   );
 };

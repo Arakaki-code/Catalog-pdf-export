@@ -8,11 +8,14 @@ interface CardProps {
   image?: string;
   code?: string;
   description?: string;
+  category?: string;
+  price?: string | number;
+  unit?: string;
   onEdit: () => void;
   onDelete: () => void;
   btnStyle?: string; // Se necessário para estilização
-  category?: string;
   isCardModeCategory?: boolean;
+  isVariationMode?: boolean;
 }
 
 const CardProduct: React.FC<CardProps> = ({
@@ -20,9 +23,12 @@ const CardProduct: React.FC<CardProps> = ({
   code,
   description,
   category,
+  unit,
+  price,
   onEdit,
   onDelete,
   isCardModeCategory = false,
+  isVariationMode = false,
 }) => {
   const handleColorUpdate = (color: string) => {
     console.log("Cor selecionada:", color);
@@ -64,9 +70,23 @@ const CardProduct: React.FC<CardProps> = ({
     </div>
   );
 
+  const renderCardModeVariations = () => (
+    <div className={styles.card_container_variations}>
+      <p className={styles.code}>{code || 'N/A'}</p>
+      <p>{description || 'N/A'}</p>
+      <p>{price || 'N/A'}</p>
+      <p>{unit || 'N/A'}</p>
+      {renderButtonsAction()}
+    </div>
+  );
+
   return (
     <div className={styles.card_container}>
-      {isCardModeCategory ? renderCardModeCategory() : renderCardModeProduct()}
+      {isVariationMode
+        ? renderCardModeVariations()
+        : isCardModeCategory
+        ? renderCardModeCategory()
+        : renderCardModeProduct()}
     </div>
   );
 };

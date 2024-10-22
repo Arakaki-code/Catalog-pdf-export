@@ -83,11 +83,11 @@ export default function ListProducts() {
       </div>
 
       {isModalOpen && (
-        <Modal onClose={closeModal}>
+        <Modal onClose={closeModal} title={"Adicionar produto"}>
           <ProductForm
             initialData={editingProduct || undefined}
             onSubmit={handleFormSubmit}
-            submitButtonLabel={editingProduct ? 'editar' : 'Adicionar'}
+            submitButtonLabel={editingProduct ? 'editar' : 'Salvar'}
           />
         </Modal>
       )}

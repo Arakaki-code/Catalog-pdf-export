@@ -14,9 +14,13 @@
     justify-content: center;
   }
 
-  select {
-    background-color: transparent;
-    cursor: pointer;
+  .select {
+    width: 100%;
+    select {
+      width: 100%;
+      background-color: transparent;
+      cursor: pointer;
+    }
   }
 }
 
@@ -28,8 +32,8 @@
   transition: 0.3s;
 
   select {
+    width: 100%;
     color: $color-text-primary-medium;
-    
   }
 
   .icon > svg {
@@ -72,5 +76,4 @@
     padding: $spacing-sm $spacing-sm;
     border-radius: $border-radius-sm;
   }
-
 }

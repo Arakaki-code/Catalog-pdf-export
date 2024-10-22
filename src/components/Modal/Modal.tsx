@@ -6,21 +6,21 @@ import DivisorLine from "../DivisorLine/DivisorLine";
 interface ModalProps {
   children?: React.ReactNode;
   onClose: () => void;
+  title?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, children, title }) => {
   return (
     <div className={styles.modal}>
       <div className={styles.modal_content}>
         <div className={styles.modal_header}>
-          <h2>Adicionar produto</h2>
+          <h2>{title}</h2>
           <Button
             btnStyle={"icon_close"}
             icon={<IoClose />}
             onClick={onClose}
           />
         </div>
-        <DivisorLine />
         <div className={styles.modal_body}>{children}</div>
       </div>
     </div>

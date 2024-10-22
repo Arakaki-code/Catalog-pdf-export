@@ -5,13 +5,18 @@
   align-items: center;
   justify-content: center;
   margin-right: 5px;
-  padding: $spacing-sm $spacing-md;
+  padding: 12px $spacing-md;
   transition: 0.3s;
 
   .icon {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }
 
@@ -21,9 +26,9 @@
   font-size: $font-size-sm;
   color: $color-text-primary-medium;
   transition: 0.3s;
+  gap: 8px;
 
   .icon {
-    margin-right: 0.3rem;
 
     & > svg {
       color: $color-text-primary-medium;
@@ -124,21 +129,21 @@
 
 .icon_close { 
   background-color: transparent;
-  border-radius: $border-radius-sm;
-  padding: $spacing-xs $spacing-xs;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xs;
   transition: 0.3s;
 
   .icon {
     font-size: 20px;
 
     & > svg {
-      color: #bf4342;
+      color: #fff;
 
     }
   }
 
   &:hover {
-    background-color: #bf4342;
+    background-color: #c45959;
     color: $color-text-light;
 
     .icon {
