@@ -52,7 +52,7 @@ const CardProduct: React.FC<CardProps> = ({
   );
 
   const renderCardModeProduct = () => (
-    <div className={styles.card_container_product}>
+    <div className={[styles.card_container_product, styles.card_box].join(" ")}>
       {image && <img src={image} alt={description} />}
       <p>{code || 'N/A'}</p>
       <p>{description || 'N/A'}</p>
@@ -62,7 +62,7 @@ const CardProduct: React.FC<CardProps> = ({
   );
 
   const renderCardModeCategory = () => (
-    <div className={styles.card_container_category}>
+    <div className={[styles.card_container_category, styles.card_box].join(" ")}>
       <p>{code || 'N/A'}</p>
       <p>{category || 'N/A'}</p>
       <ColorSelect onColorChange={handleColorUpdate} />
@@ -71,7 +71,7 @@ const CardProduct: React.FC<CardProps> = ({
   );
 
   const renderCardModeVariations = () => (
-    <div className={styles.card_container_variations}>
+    <div className={[styles.card_container_variations, styles.card_box].join(" ")}>
       <p className={styles.code}>{code || 'N/A'}</p>
       <p>{description || 'N/A'}</p>
       <p>{price || 'N/A'}</p>

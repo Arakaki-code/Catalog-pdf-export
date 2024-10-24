@@ -14,11 +14,16 @@
 
     box-shadow: none;
   }
-  
+
+  .card_box{
+    overflow: hidden;
+    gap: 10px;
     img {
       object-fit: contain;
       overflow: hidden;
     }
+    
+  }     
   
     .actions {
       display: flex;
@@ -35,6 +40,8 @@
     align-items: center;
     text-align: left;
   }
+  
+ 
 
   .card_container_category {
 

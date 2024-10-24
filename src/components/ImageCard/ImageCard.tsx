@@ -1,5 +1,5 @@
 import Button from "../Button/Button";
-import styles from "./ImageCard.module.scss"
+import styles from "./ImageCard.module.scss";
 import React, { ChangeEvent, useRef } from "react";
 
 interface ImageCardProps {
@@ -7,9 +7,16 @@ interface ImageCardProps {
   className?: string;
   onRemove: () => void;
   onChange: (image: string) => void;
+  error?: string; 
 }
 
-const ImageCard: React.FC<ImageCardProps> = ({ src, onRemove, onChange, className }) => {
+const ImageCard: React.FC<ImageCardProps> = ({
+  src,
+  onRemove,
+  onChange,
+  className,
+  error, 
+}) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,28 +32,21 @@ const ImageCard: React.FC<ImageCardProps> = ({ src, onRemove, onChange, classNam
   };
 
   return (
-    <div className={[styles["image-card"], className].join(" ") }>
+    <div className={[styles["image-card"], className].join(" ")}>
       {src ? (
         <>
-          <img 
-            src={src} 
-            alt="Imagem do produto" 
-          />
-          
+          <img src={src} alt="Imagem do produto" />
           <Button
             onClick={onRemove}
             btnStyle={"secondary"}
-            className={styles.btn_remove}
+            className={styles.btn_remove_image}
           >
             Remover imagem
           </Button>
         </>
       ) : (
-        <div>
-          <img 
-            src="./img-product.png" 
-            alt="Imagem do produto padrão" 
-          />
+        <div className={styles["image-card_empty"]}>
+          <img src="./not-image.jpg" alt="Imagem do produto padrão" />
           <input
             ref={inputRef}
             type="file"
@@ -54,14 +54,13 @@ const ImageCard: React.FC<ImageCardProps> = ({ src, onRemove, onChange, classNam
             style={{ display: "none" }}
             onChange={handleImageChange}
           />
-          <Button 
-            onClick={triggerFileSelect}
-            btnStyle={"secondary"}
-          >
+          <Button onClick={triggerFileSelect} btnStyle={"secondary"}>
             Selecionar Imagem
           </Button>
         </div>
       )}
+      {/* Exibe mensagem de erro, se houver */}
+      {error && <span className={styles.error_message}>{error}</span>}
     </div>
   );
 };

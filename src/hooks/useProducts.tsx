@@ -25,9 +25,9 @@ const initialProducts: Product[] = [
     description: "Furadeira",
     category: "eletrica",
     variations: [
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
+      { code: "pathproduct", description: "Furadeira axb", price: 120.00, unit: "unidade" },
+      { code: "pathproduct", description: "Furadeira axb", price: 120.00, unit: "unidade" },
+      { code: "pathproduct", description: "Furadeira axb", price: 120.00, unit: "unidade" },
     ],
   },
   {
@@ -59,7 +59,7 @@ const initialProducts: Product[] = [
 export default function useProducts() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
-  // Função para filtrar produtos por categoria
+  // Filtrar produtos por categoria
   const filterProducts = useCallback(
     (selectedCategory: string | number) => {
       if (!selectedCategory) return products;
@@ -83,12 +83,14 @@ export default function useProducts() {
   );
 
   // Remover um produto
-  const removeProduct = useCallback(
-    (code: string) => {
-      setProducts((prev) => prev.filter((product) => product.code !== code));
-    },
-    []
-  );
+  const removeProduct = useCallback((code: string) => {
+    const productToRemove = products.find((p) => p.code === code);
+    if (!productToRemove) return null;
+    setProducts((prev) => prev.filter((product) => product.code !== code));
+    return productToRemove;
+  }, [products]);
+
+
 
   return {
     products,

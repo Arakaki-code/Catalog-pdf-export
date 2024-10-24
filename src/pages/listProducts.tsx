@@ -27,16 +27,26 @@ export default function ListProducts() {
 
 
   const openModal = (product?: Product) => {
+    if (product) {
+      setEditingProduct(product); // Modo de edição
+    } else {
+      setEditingProduct(null); // Modo de adição
+    }
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setEditingProduct(null);
   };
 
 
-  const handleFormSubmit = () => {
-    
+  const handleFormSubmit = (productData: Product) => {
+    const productWithVariations = {
+      ...productData,
+      variations: productData.variations || [], 
+    };
+    addOrEditProduct(productWithVariations, editingProduct || undefined);
     closeModal();
   };
 
@@ -46,7 +56,6 @@ export default function ListProducts() {
   };
 
   const handleDelete = (code: string) => {
-    console.log(`Excluindo produto: ${code}`);
     removeProduct(code);
   };
 
@@ -54,7 +63,7 @@ export default function ListProducts() {
     <div className={styles.listProducts}>
       <div className={styles.listProducts_header}>
         {getCategoryLabel() !== "Todas Categorias" ? <h2>{getCategoryLabel()}</h2> : <h2>Todos os produtos</h2>}
-        <div className={styles.listProducts_buttons}>
+        <div className={styles.header_buttons}>
           <Select
             options={optionsCategory}
             value={selectedCategory}
@@ -67,7 +76,7 @@ export default function ListProducts() {
             btnStyle={"primary"}
             icon={<FaPlus />}
             className={styles.button_add_product}
-            onClick={openModal}
+            onClick={() => openModal()}
           >
             Adicionar Produto
           </Button>
@@ -83,11 +92,11 @@ export default function ListProducts() {
       </div>
 
       {isModalOpen && (
-        <Modal onClose={closeModal} title={"Adicionar produto"}>
+        <Modal onClose={closeModal} title={editingProduct ? "Editar produto" : "Adicionar produto"}>
           <ProductForm
             initialData={editingProduct || undefined}
             onSubmit={handleFormSubmit}
-            submitButtonLabel={editingProduct ? 'editar' : 'Salvar'}
+            submitButtonLabel={editingProduct ? 'Alterar produto' : 'Salvar Produto'}
           />
         </Modal>
       )}

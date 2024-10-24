@@ -16,6 +16,7 @@ interface SelectProps {
   name?: string;
   icon?: React.ReactNode;
   selectStyles?: string;
+  error?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -29,6 +30,7 @@ const Select: React.FC<SelectProps> = ({
   disabled = false,
   icon,
   selectStyles = "primary",
+  error,
 }) => {
   return (
     <div className={[styles["select_container"], styles[selectStyles], className].join(" ")}>
@@ -40,6 +42,7 @@ const Select: React.FC<SelectProps> = ({
           name={name}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
+          className={error ? styles["select_error"] : ""}
         >
           <option className={styles.option} value="" disabled>
             {placeholder}
@@ -51,6 +54,7 @@ const Select: React.FC<SelectProps> = ({
           ))}
         </select>
       </div>
+      {error && <span className={styles.error_message}>{error}</span>}
     </div>
   );
 };

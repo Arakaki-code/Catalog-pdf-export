@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       type={"button"}
       className={[styles["button"], styles[btnStyle], className].join(" ")}
-      onClick={disabled ? undefined : onClick}
+      onClick={onClick}
       disabled={disabled}
     >
       {icon && <div className={styles.icon}>{icon}</div>}

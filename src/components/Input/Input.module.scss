@@ -35,3 +35,10 @@
     box-shadow: $shadow-sm
   }
 }
+
+.error_message {
+  color: $color-error;
+  font-size: $font-size-xs;
+  letter-spacing: $letter-spacing-light;
+  margin-top: 3px;
+}

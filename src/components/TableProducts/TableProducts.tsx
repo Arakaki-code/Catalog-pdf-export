@@ -36,7 +36,7 @@ export default function TableProducts({ products, onEdit, onDelete }: TableProdu
             />
           ))
         ) : (
-          <p>Nenhum produto encontrado.</p>
+          <p className={styles.noProducts}>Nenhum produto encontrado.</p>
         )}
       </div>
     </div>
