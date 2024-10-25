@@ -1,7 +1,7 @@
 import CardCategory from "../Card/Card";
-import styles from "./TableCategory.module.scss";
+import styles from "./ListCategory.module.scss";
 
-const TableCategory = () => {
+const ListCategory = () => {
   return (
     <div>
       <div className={styles.divisor}></div>
@@ -22,4 +22,4 @@ const TableCategory = () => {
   );
 };
 
-export default TableCategory;
+export default ListCategory;

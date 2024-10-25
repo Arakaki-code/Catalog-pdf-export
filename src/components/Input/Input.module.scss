@@ -37,6 +37,7 @@
 }
 
 .error_message {
+  position: relative;
   color: $color-error;
   font-size: $font-size-xs;
   letter-spacing: $letter-spacing-light;

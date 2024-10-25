@@ -1,5 +1,5 @@
 import styles from "../styles/category.module.scss";
-import TableCategory from "../components/TableCategory/TableCategory";
+import TableCategory from "../components/ListCategory/ListCategory";
 import Button from "../components/Button/Button";
 import { FaPlus } from "react-icons/fa6";
 

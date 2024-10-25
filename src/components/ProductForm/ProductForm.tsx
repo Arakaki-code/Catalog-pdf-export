@@ -8,7 +8,8 @@ import DivisorLine from "../DivisorLine/DivisorLine";
 import CardProduct from "../Card/Card";
 import Button from "../Button/Button";
 import { GiSaveArrow } from "react-icons/gi";
-import DropdownCard from "../DropdownCard/dropdownCard";
+import DropdownCard from "../DropdownCard/DropdownCard";
+import ListVariations from "../ListVariations/ListVariations";
 
 interface ProductFormProps {
   initialData?: Product;
@@ -21,10 +22,10 @@ const optionsCategory = [
   { value: "hidraulica", label: "Hidráulica" },
 ];
 const optionsUnit = [
-  { value: "unidade", label: "Unidade" },
-  { value: "peca", label: "Peça" },
-  { value: "kg", label: "Kg" },
-  { value: "litro", label: "Litro" },
+  { value: "Unid", label: "Unidade" },
+  { value: "Pçs", label: "Peça" },
+  { value: "kg", label: "Kilo" },
+  { value: "Lts", label: "Litro" },
 ];
 
 const ProductForm: React.FC<ProductFormProps> = ({
@@ -67,7 +68,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     if (!newVariation.description) {
       errors.description = "Descrição do produto necessária.";
     }
-    if (newVariation.price <= 0) {
+    if (!newVariation.price) {
       errors.price = "Preço deve ser maior que zero.";
     }
     if (!newVariation.unit) {
@@ -80,6 +81,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
   const isSaveButtonDisabled = formData.variations?.length === 0;
 
+  const formatCurrency = (value: string) => {
+    const numericValue = value.replace(/\D/g, "");
+    const formattedValue = (parseFloat(numericValue) / 100)
+      .toFixed(2)
+      .replace(".", ",");
+    return formattedValue;
+  };
   const generateUniqueCode = () =>
     `${Math.random().toString(36).substring(2, 10)}`;
 
@@ -107,7 +115,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
     setFormData((prev) => ({
       ...prev,
-      variations: [...prev?.variations, variationWithCode],
+      variations: [...prev.variations, variationWithCode],
     }));
 
     setNewVariation({
@@ -116,14 +124,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
       price: 0,
       unit: newVariation.unit,
     });
-  };
-
-  const formatCurrency = (value: string) => {
-    const numericValue = value.replace(/\D/g, "");
-    const formattedValue = (parseFloat(numericValue) / 100)
-      .toFixed(2)
-      .replace(".", ",");
-    return formattedValue;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,6 +152,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
     if (validateForm()) onSubmit(productWithCode);
   };
+
+
 
   return (
     <form className={styles.formulario} onSubmit={handleSubmit}>
@@ -249,27 +251,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
         </Button>
       </div>
 
-      <div className={styles.list_variations}>
-        {formData.variations?.length > 0 ? (
-          formData.variations?.map((variation, index) => (
-            <CardProduct
-              key={index}
-              isVariationMode
-              code={variation.code}
-              description={variation.description}
-              price={formatCurrency(variation.price.toString())}
-              unit={variation.unit}
-              onEdit={() => "editando"}
-              onDelete={() => "deletando"}
-            />
-          ))
-        ) : (
-          <span className={styles.list_variations_span}>
-            Adicione ao menos uma variação do produto para salvar
-          </span>
-        )}
-        <DropdownCard />
-      </div>
+      <ListVariations productForm={formData} setProductForm={setFormData} />
     </form>
   );
 };

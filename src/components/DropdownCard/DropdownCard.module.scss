@@ -1,19 +1,26 @@
 @import '../../styles/_variables.scss';
 
 .dropdownCard {
-    width: 100%;
+    width: 96%;
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
     justify-content: center;
     padding:$spacing-md;
     background-color: $color-bg-default;
-    border-radius: 0 0 5px 5px;    
+    border-radius: 0 0 5px 5px;   
+    margin-top: -8px; 
+    margin-bottom: 0.8rem;
 }
 
 .dropdown_fields {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
 }
+
+.dropdown_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;}

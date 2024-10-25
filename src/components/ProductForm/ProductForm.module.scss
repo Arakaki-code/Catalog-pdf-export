@@ -41,18 +41,3 @@
   gap: 15px;
 }
 
-.list_variations {
-  width: 100%;
-  max-height: 220px;
-  overflow-y: auto;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  background-color: $color-bg-surface-dark;
-  padding: $spacing-md;
-
-  .list_variations_span{
-    color: $color-text-placeholder;
-  }
-}

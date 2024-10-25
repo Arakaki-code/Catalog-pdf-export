@@ -1,14 +1,14 @@
-import styles from "./TableProducts.module.scss";
+import styles from "./ListProducts.module.scss";
 import CardProduct from "../Card/Card";
 import {Product} from "../../hooks/useProducts";
 
-interface TableProductsProps {
+interface ListProductsProps {
   products: Product[];
   onEdit: (code: string) => void;
   onDelete: (code: string) => void;
 }
 
-export default function TableProducts({ products, onEdit, onDelete }: TableProductsProps) {
+export default function ListProducts({ products, onEdit, onDelete }: ListProductsProps) {
 
 
   return (

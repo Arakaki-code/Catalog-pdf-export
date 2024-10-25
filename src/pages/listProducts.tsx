@@ -7,7 +7,7 @@ import { MdCategory } from "react-icons/md";
 import { useCategory } from "../hooks/useCategory";
 
 import Button from "../components/Button/Button";
-import TableProducts from "../components/TableProducts/TableProducts";
+import TableProducts from "../components/ListProducts/ListProducts";
 import Modal from "../components/Modal/Modal";
 import Select from "../components/Select/Select";
 import ProductForm from "../components/ProductForm/ProductForm";
@@ -96,7 +96,7 @@ export default function ListProducts() {
           <ProductForm
             initialData={editingProduct || undefined}
             onSubmit={handleFormSubmit}
-            submitButtonLabel={editingProduct ? 'Alterar produto' : 'Salvar Produto'}
+            submitButtonLabel={editingProduct ? 'Salvar produto' : 'Adicionar Produto'}
           />
         </Modal>
       )}

@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 export interface ProductVariation {
   code: string;
   description: string;
-  price: number;
+  price: number | string;
   unit: string;
 }
 
@@ -25,9 +25,24 @@ const initialProducts: Product[] = [
     description: "Furadeira",
     category: "eletrica",
     variations: [
-      { code: "pathproduct", description: "Furadeira axb", price: 120.00, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.00, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.00, unit: "unidade" },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
     ],
   },
   {
@@ -37,9 +52,24 @@ const initialProducts: Product[] = [
     description: "Objeto",
     category: "hidraulica",
     variations: [
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
     ],
   },
   {
@@ -49,22 +79,47 @@ const initialProducts: Product[] = [
     description: "Outro objeto",
     category: "hidraulica",
     variations: [
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
-      { code: "pathproduct", description: "Furadeira axb", price: 120.0, unit: "unidade" },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
+      {
+        code: "pathproduct",
+        description: "Furadeira axb",
+        price: 120.0,
+        unit: "unidade",
+      },
     ],
   },
 ];
 
 export default function useProducts() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [variation, setVariation] = useState<ProductVariation>(
+    {
+      code: "",
+      description: "",
+      price: "",
+      unit: "",
+    },
+  );
 
-  // Filtrar produtos por categoria
+  // Função para filtrar produtos por categoria
   const filterProducts = useCallback(
     (selectedCategory: string | number) => {
       if (!selectedCategory) return products;
       return products.filter(
-        (product) => product.category.toLowerCase() === String(selectedCategory).toLowerCase()
+        (product) =>
+          product.category.toLowerCase() ===
+          String(selectedCategory).toLowerCase()
       );
     },
     [products]
@@ -75,7 +130,9 @@ export default function useProducts() {
     (product: Product, editingProduct?: Product) => {
       setProducts((prev) =>
         editingProduct
-          ? prev.map((p) => (p.id === editingProduct.id ? { ...product, id: p.id } : p))
+          ? prev.map((p) =>
+              p.id === editingProduct.id ? { ...product, id: p.id } : p
+            )
           : [...prev, { ...product, id: prev.length + 1 }]
       );
     },
@@ -84,18 +141,15 @@ export default function useProducts() {
 
   // Remover um produto
   const removeProduct = useCallback((code: string) => {
-    const productToRemove = products.find((p) => p.code === code);
-    if (!productToRemove) return null;
     setProducts((prev) => prev.filter((product) => product.code !== code));
-    return productToRemove;
-  }, [products]);
-
-
+  }, []);
 
   return {
     products,
     filterProducts,
     addOrEditProduct,
     removeProduct,
+    variation,
+    setVariation,
   };
 }
