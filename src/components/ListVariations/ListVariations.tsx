@@ -5,8 +5,8 @@ import styles from "./ListVariations.module.scss";
 import { Product, ProductVariation } from "@/src/hooks/useProducts";
 
 interface ListVariationsProps {
-  productForm: Product; // Recebe o estado do formulário principal
-  setProductForm: (data: Product) => void; // Função para atualizar o formulário
+  productForm: Product; 
+  setProductForm: (data: Product) => void; 
 }
 
 const ListVariations: React.FC<ListVariationsProps> = ({
@@ -31,13 +31,13 @@ const ListVariations: React.FC<ListVariationsProps> = ({
     );
 
     setProductForm({ ...productForm, variations: updatedVariations });
-    setShowVariation(null); // Fecha o dropdown
+    setShowVariation(null); 
   };
 
   const handleEditVariation = (index: number) => {
     const selectedVariation = productForm.variations[index];
-    setEditedVariation(selectedVariation); // Define a variação para edição
-    setShowVariation(index); // Abre o dropdown da variação selecionada
+    setEditedVariation(selectedVariation); 
+    setShowVariation(index); 
   };
 
   const handleDeleteVariation = (index: number) => {
@@ -46,7 +46,7 @@ const ListVariations: React.FC<ListVariationsProps> = ({
   };
 
   const handleCancel = () => {
-    setShowVariation(null); // Fecha o dropdown sem salvar
+    setShowVariation(null); 
   };
 
   return (

@@ -36,7 +36,7 @@ const Select: React.FC<SelectProps> = ({
     <div className={[styles["select_container"], styles[selectStyles], className].join(" ")}>
       {icon && <div className={styles.icon}>{icon}</div>}
       {label && <label>{label}</label>}
-      <div className={styles.select}>
+      <div className={[styles["select"], error ? styles["error"] : ""].join(" ")}>
         <select
           value={value}
           name={name}

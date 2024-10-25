@@ -4,6 +4,7 @@ import Input from '../Input/Input';
 import Select from '../Select/Select';
 import Button from '../Button/Button';
 import { ProductVariation } from '../../hooks/useProducts';
+import useValidation from '../../hooks/useValidation';
 
 interface DropdownCardProps {
   variation: ProductVariation | null;
@@ -20,17 +21,17 @@ const optionsUnit = [
 
 const DropdownCard: React.FC<DropdownCardProps> = ({ variation, onSave, onCancel }) => {
   const [localVariation, setLocalVariation] = useState<ProductVariation>(
-    variation || { code: '', description: '', price: '', unit: '' }
+    variation || { code: '', description: '', price: 0, unit: '' }
   );
-  const [variationErrors, setVariationErrors] = useState<{
-    [key: string]: string;
-  }>({});
+  const { variationErrors, variationValidate, setVariationErrors } = useValidation()
 
-  // Atualiza o estado local quando a variação recebida mudar
+
+  
   useEffect(() => {
-    if (variation) {
+    if (variation && variation !== localVariation) {
       setLocalVariation(variation);
     }
+
   }, [variation]);
 
   const formatCurrency = (value: string) => {
@@ -42,11 +43,12 @@ const DropdownCard: React.FC<DropdownCardProps> = ({ variation, onSave, onCancel
   };
 
   const handlePriceChange = (value: string) => {
-  
+    if (value === '') {
+      handleChange('price', 0); 
+      return;
+    }
     const sanitizedValue = value.replace(/[^\d,]/g, '');
     handleChange('price', sanitizedValue);
-
-    
   };
 
   const handleChange = (field: keyof ProductVariation, value: string | number) => {
@@ -67,29 +69,12 @@ const DropdownCard: React.FC<DropdownCardProps> = ({ variation, onSave, onCancel
 
 
   const handleSave = () => {
-    validateVariation()
-    if (localVariation.description && localVariation.price.toString() && localVariation.unit) {
-      validateVariation()
-      onSave({ ...localVariation});
+    if (variationValidate(localVariation)) {
+      onSave(localVariation);
     }
   };
 
-  const validateVariation = () => {
-    const errors: { [key: string]: string } = {};
 
-    if (!localVariation.description) {
-      errors.description = "Descrição do produto necessária.";
-    }
-    if (!localVariation.price) {
-      errors.price = "Preço deve ser maior que zero.";
-    }
-    if (!localVariation.unit) {
-      errors.unit = "Selecionar um tipo de unidade";
-    }
-
-    setVariationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   return (
     <div className={styles.dropdownCard}>

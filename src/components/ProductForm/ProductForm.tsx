@@ -10,6 +10,7 @@ import Button from "../Button/Button";
 import { GiSaveArrow } from "react-icons/gi";
 import DropdownCard from "../DropdownCard/DropdownCard";
 import ListVariations from "../ListVariations/ListVariations";
+import useValidation from "@/src/hooks/useValidation";
 
 interface ProductFormProps {
   initialData?: Product;
@@ -40,6 +41,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
   onSubmit,
   submitButtonLabel = "Salvar",
 }) => {
+
+  
   const [formData, setFormData] = useState<Product>(initialData);
   const [newVariation, setNewVariation] = useState<ProductVariation>({
     code: "",
@@ -47,46 +50,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
     price: 0,
     unit: "",
   });
-  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
-  const [variationErrors, setVariationErrors] = useState<{
-    [key: string]: string;
-  }>({});
-
-  const validateForm = () => {
-    const errors: { [key: string]: string } = {};
-    if (!formData.description)
-      errors.description = "Nome do produto é necessária.";
-    if (!formData.category) errors.category = "Categoria necessária.";
-    if (!formData.image) errors.image = "Imagem do produto é necessária.";
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const validateVariation = () => {
-    const errors: { [key: string]: string } = {};
-
-    if (!newVariation.description) {
-      errors.description = "Descrição do produto necessária.";
-    }
-    if (!newVariation.price) {
-      errors.price = "Preço deve ser maior que zero.";
-    }
-    if (!newVariation.unit) {
-      errors.unit = "Selecionar um tipo de unidade";
-    }
-
-    setVariationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+  const {productValidate, productErrors, setProductErrors, variationValidate, variationErrors, setVariationErrors} = useValidation()
 
   const isSaveButtonDisabled = formData.variations?.length === 0;
 
   const formatCurrency = (value: string) => {
     const numericValue = value.replace(/\D/g, "");
-    const formattedValue = (parseFloat(numericValue) / 100)
-      .toFixed(2)
-      .replace(".", ",");
-    return formattedValue;
+    const parsedValue = numericValue ? parseFloat(numericValue) / 100 : 0; // Retorna 0 se vazio
+    return parsedValue.toFixed(2).replace(".", ",");
   };
   const generateUniqueCode = () =>
     `${Math.random().toString(36).substring(2, 10)}`;
@@ -106,7 +77,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   };
 
   const addVariation = () => {
-    if (!validateVariation()) return;
+    if (!variationValidate(newVariation)) return;
 
     const variationWithCode = {
       ...newVariation,
@@ -131,13 +102,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === "description") {
-      setFormErrors((prev) => ({ ...prev, description: "" }));
+      setProductErrors((prev) => ({ ...prev, description: "" }));
     }
   };
 
   const handleCategoryChange = (value: string) => {
     setFormData((prev) => ({ ...prev, category: value }));
-    setFormErrors((prev) => ({ ...prev, category: "" }));
+    setProductErrors((prev) => ({ ...prev, category: "" }));
   };
 
   const handleSubmit = (e?: FormEvent) => {
@@ -148,12 +119,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
       code: generateUniqueCode(),
     };
 
-    console.log("Produto enviado:", productWithCode);
 
-    if (validateForm()) onSubmit(productWithCode);
+    if (productValidate(productWithCode)) {
+      onSubmit(productWithCode); // Envia o formulário se válido
+    }
+
   };
-
-
 
   return (
     <form className={styles.formulario} onSubmit={handleSubmit}>
@@ -164,9 +135,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
           onRemove={() => setFormData({ ...formData, image: "" })}
           onChange={(image) => {
             setFormData({ ...formData, image }),
-              setFormErrors((prev) => ({ ...prev, image: "" }));
+            setProductErrors((prev) => ({ ...prev, image: '' }));
           }}
-          error={formErrors["image"]}
+          error={productErrors["image"]}
         />
 
         <div className={styles.main_form}>
@@ -177,7 +148,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             value={formData.description}
             onChange={handleChange}
             placeholder="Nome do produto"
-            error={formErrors["description"]}
+            error={productErrors["description"]}
           />
 
           <Select
@@ -189,7 +160,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             value={formData.category}
             placeholder="Selecionar categoria"
             selectStyles="secondary"
-            error={formErrors["category"]}
+            error={productErrors["category"]}
           />
         </div>
       </div>
