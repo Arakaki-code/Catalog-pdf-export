@@ -1,28 +1,24 @@
 import { useState } from "react";
+import { optionsCategory } from "../utils/utils";
 
-interface CategoryOption {
+export interface CategoryOption {
   value: string | number;
   label: string;
+  color?: string;
+  code?: string;
 }
 
-interface Product {
-    id: number;
-    code: string;
-    image: string;
-    description: string;
-    category: string;
-  }
+const initialCategories: CategoryOption[] = [
+  { value: "eletrica", label: "Elétrica", code: "zs2fxk1", color: "#fb8500" },
+  { value: "hidraulica", label: "Hidráulica", code: "zs2fxk2", color: "#219ebc"},
+  { value: "eletronicos", label: "Eletrônicos" , code: "zs2fxk2", color: "#588157"},
+];
 
-export function useCategory(initialCategory: string  = "", products: Product[] = []) {
-  const [selectedCategory, setSelectedCategory] = useState<string >(
-    initialCategory
-  );
 
-  const optionsCategory: CategoryOption[] = [
-    { value: "", label: "Todas Categorias" },
-    { value: "eletrica", label: "Elétrica" },
-    { value: "hidraulica", label: "Hidráulica" },
-  ];
+export function useCategory() {
+  const [selectedCategory, setSelectedCategory] = useState<string >("");
+  const[categories, setCategories] = useState<CategoryOption[]>(initialCategories);
+
 
   const handleCategory = (value: string) => {
     setSelectedCategory(value);
@@ -36,10 +32,13 @@ export function useCategory(initialCategory: string  = "", products: Product[] =
   };
 
 
+
   return {
     selectedCategory,
     handleCategory,
     optionsCategory,
     getCategoryLabel,
+    categories,
+    setCategories,
   };
 }

@@ -1,7 +1,14 @@
 import CardCategory from "../Card/Card";
+import { CategoryOption, useCategory } from "../../hooks/useCategory";
 import styles from "./ListCategory.module.scss";
 
-const ListCategory = () => {
+interface ListCategoryProps {
+  onEdit: (code: string) => void;
+  onDelete: (code: string) => void;
+}
+const ListCategory: React.FC<ListCategoryProps> = ({ onEdit, onDelete}) => {
+  const {categories} = useCategory()
+
   return (
     <div>
       <div className={styles.divisor}></div>
@@ -11,13 +18,22 @@ const ListCategory = () => {
         <span>Cor</span>
         <span>Ações</span>
       </div>
-      <CardCategory
-        category={"Eletrica"}
-        code={"xzY03xcD"}
-        onEdit={() => {}}
-        onDelete={() => {}}
-        isCardModeCategory
-      />
+      <div className={styles.tableCategory_body}>
+        {categories?.length > 0 ? (
+          categories?.map((category) => (
+            <CardCategory
+              category={category.label}
+              code={category.code}
+              color={category.color}
+              onEdit={() => {}}
+              onDelete={() => {}}
+              isCardModeCategory
+            />
+          ))
+        ) : (
+          <p className={styles.noCategorys}>Nenhuma categoria encontrada.</p>
+        )}
+      </div>
     </div>
   );
 };

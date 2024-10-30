@@ -3,8 +3,8 @@ import styles from "../styles/listProducts.module.scss";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { MdCategory } from "react-icons/md";
-
 import { useCategory } from "../hooks/useCategory";
+import {optionsCategory} from "../utils/utils";
 
 import Button from "../components/Button/Button";
 import TableProducts from "../components/ListProducts/ListProducts";
@@ -17,7 +17,6 @@ export default function ListProducts() {
   const { products, filterProducts, addOrEditProduct, removeProduct } = useProducts();
   const {
     getCategoryLabel,
-    optionsCategory,
     selectedCategory,
     handleCategory,
   } = useCategory();

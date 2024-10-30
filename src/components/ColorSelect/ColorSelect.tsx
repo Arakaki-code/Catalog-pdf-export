@@ -9,7 +9,7 @@ interface ColorSelectProps {
 }
 
 const ColorSelect: React.FC<ColorSelectProps> = ({
-  initialColor = "red",
+  initialColor = "#7a7a7a",
   onColorChange,
   isEdit,
 }) => {

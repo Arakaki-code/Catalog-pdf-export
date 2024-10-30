@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 
-// Interfaces para tipagem clara
 export interface ProductVariation {
   code: string;
   description: string;

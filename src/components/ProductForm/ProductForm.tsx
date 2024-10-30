@@ -1,14 +1,15 @@
-import styles from "./ProductForm.module.scss";
 import React, { FormEvent, useState } from "react";
 import { Product, ProductVariation } from "../../hooks/useProducts";
+import { useCategory } from "../../hooks/useCategory";
+import {optionsUnit} from "../../utils/utils"
+import { GiSaveArrow } from "react-icons/gi";
+
+import styles from "./ProductForm.module.scss";
 import Input from "../Input/Input";
 import ImageCard from "../ImageCard/ImageCard";
 import Select from "../Select/Select";
 import DivisorLine from "../DivisorLine/DivisorLine";
-import CardProduct from "../Card/Card";
 import Button from "../Button/Button";
-import { GiSaveArrow } from "react-icons/gi";
-import DropdownCard from "../DropdownCard/DropdownCard";
 import ListVariations from "../ListVariations/ListVariations";
 import useValidation from "@/src/hooks/useValidation";
 
@@ -18,16 +19,6 @@ interface ProductFormProps {
   submitButtonLabel?: string;
 }
 
-const optionsCategory = [
-  { value: "eletrica", label: "Elétrica" },
-  { value: "hidraulica", label: "Hidráulica" },
-];
-const optionsUnit = [
-  { value: "Unid", label: "Unidade" },
-  { value: "Pçs", label: "Peça" },
-  { value: "kg", label: "Kilo" },
-  { value: "Lts", label: "Litro" },
-];
 
 const ProductForm: React.FC<ProductFormProps> = ({
   initialData = {
@@ -42,7 +33,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   submitButtonLabel = "Salvar",
 }) => {
 
-  
+  const {categories} = useCategory()
   const [formData, setFormData] = useState<Product>(initialData);
   const [newVariation, setNewVariation] = useState<ProductVariation>({
     code: "",
@@ -50,7 +41,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
     price: 0,
     unit: "",
   });
-  const {productValidate, productErrors, setProductErrors, variationValidate, variationErrors, setVariationErrors} = useValidation()
+  const {
+    productValidate, productErrors, setProductErrors, 
+    variationValidate, variationErrors, setVariationErrors
+  } = useValidation()
 
   const isSaveButtonDisabled = formData.variations?.length === 0;
 
@@ -155,7 +149,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             label="Categoria"
             name="category"
             className={styles.product_category}
-            options={optionsCategory}
+            options={categories}
             onChange={handleCategoryChange}
             value={formData.category}
             placeholder="Selecionar categoria"

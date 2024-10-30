@@ -11,6 +11,7 @@ interface CardProps {
   category?: string;
   price?: string | number;
   unit?: string;
+  color?: string; 
   onEdit: () => void;
   onDelete: () => void;
   btnStyle?: string; // Se necessário para estilização
@@ -25,14 +26,12 @@ const CardProduct: React.FC<CardProps> = ({
   category,
   unit,
   price,
+  color,
   onEdit,
   onDelete,
   isCardModeCategory = false,
   isVariationMode = false,
 }) => {
-  const handleColorUpdate = (color: string) => {
-    console.log("Cor selecionada:", color);
-  };
 
   const renderButtonsAction = () => (
     <div className={styles.actions}>
@@ -65,7 +64,7 @@ const CardProduct: React.FC<CardProps> = ({
     <div className={[styles.card_container_category, styles.card_box].join(" ")}>
       <p>{code || 'N/A'}</p>
       <p>{category || 'N/A'}</p>
-      <ColorSelect onColorChange={handleColorUpdate} />
+      <ColorSelect  initialColor={color}/>
       {renderButtonsAction()}
     </div>
   );
