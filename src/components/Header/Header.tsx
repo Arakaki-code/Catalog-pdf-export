@@ -11,7 +11,7 @@ export default function Header(props: HeaderProps) {
     const pageTitles: {[key: string]: string} = {
         "/": "Início",
         "/category": "Categorias",
-        "/listProducts": "Lista de Produtos"
+        "/products": "Lista de Produtos"
     };
     const titulo = pageTitles[router.pathname] || "Catálago de produtos";
 

@@ -29,7 +29,6 @@
   gap: 8px;
 
   .icon {
-
     & > svg {
       color: $color-text-primary-medium;
     }
@@ -64,6 +63,37 @@
   }
 }
 
+.btn_borderline {
+  background-color: transparent;
+  border-radius: $border-radius-sm;
+  border: 1px solid $color-text-primary-medium;
+  font-size: $font-size-sm;
+  color: $color-text-primary-medium;
+  transition: 0.3s;
+  gap: 8px;
+
+  .icon {
+    & > svg {
+      color: $color-text-primary-medium;
+    }
+  }
+
+  &:hover {
+    background-color: $color-primary-dark;
+    box-shadow: $shadow-lg;
+    color: $color-text-light;
+
+    .icon > svg {
+      color: $color-text-light;
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+    filter: brightness(1.4);
+  }
+}
+
 
 .icon_edit {
   background-color: transparent;
@@ -95,7 +125,7 @@
   }
 }
 
-.icon_red { 
+.icon_remove {
   background-color: transparent;
   border-radius: $border-radius-sm;
   padding: $spacing-sm $spacing-sm;
@@ -106,7 +136,6 @@
 
     & > svg {
       color: #bf4342;
-
     }
   }
 
@@ -127,7 +156,7 @@
   }
 }
 
-.icon_close { 
+.icon_close {
   background-color: transparent;
   border-radius: $border-radius-lg;
   padding: $spacing-xs;
@@ -138,7 +167,6 @@
 
     & > svg {
       color: #fff;
-
     }
   }
 
@@ -158,5 +186,3 @@
     box-shadow: none;
   }
 }
-
-

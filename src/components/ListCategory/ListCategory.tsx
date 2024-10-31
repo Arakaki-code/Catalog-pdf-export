@@ -3,11 +3,11 @@ import { CategoryOption, useCategory } from "../../hooks/useCategory";
 import styles from "./ListCategory.module.scss";
 
 interface ListCategoryProps {
-  onEdit: (code: string) => void;
+  categories: CategoryOption[];
+  onEdit: (code: string) => void ;
   onDelete: (code: string) => void;
 }
-const ListCategory: React.FC<ListCategoryProps> = ({ onEdit, onDelete}) => {
-  const {categories} = useCategory()
+const ListCategory: React.FC<ListCategoryProps> = ({categories, onEdit, onDelete}) => {
 
   return (
     <div>
@@ -20,13 +20,14 @@ const ListCategory: React.FC<ListCategoryProps> = ({ onEdit, onDelete}) => {
       </div>
       <div className={styles.tableCategory_body}>
         {categories?.length > 0 ? (
-          categories?.map((category) => (
+          categories?.map((categorie) => (
             <CardCategory
-              category={category.label}
-              code={category.code}
-              color={category.color}
-              onEdit={() => {}}
-              onDelete={() => {}}
+              key={categorie.code}
+              label={categorie.label}
+              code={categorie.code}
+              color={categorie.color}
+              onEdit={() => onEdit(categorie.code)}
+              onDelete={() => onDelete(categorie.code)}
               isCardModeCategory
             />
           ))

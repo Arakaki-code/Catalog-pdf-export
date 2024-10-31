@@ -26,11 +26,11 @@ export default function ListProducts({ products, onEdit, onDelete }: ListProduct
         {products.length > 0 ? (
           products.map((product) => (
             <CardProduct
-              key={product.id}
+              key={product.code}
               code={product.code}
               image={product.image}
               description={product.description}
-              category={product.category}
+              label={product.category}
               onEdit={() => onEdit(product.code)}
               onDelete={() => onDelete(product.code)}
             />

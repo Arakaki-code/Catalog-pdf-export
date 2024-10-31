@@ -7,10 +7,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   width?: string | number;
   height?: string | number;
   error?: string;
+  stylesInput?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, width, height, style, error, ...props }, ref) => {
+  ({ className, label, width, height, style, error, stylesInput = "primary", ...props }, ref) => {
     const inlineStyles: CSSProperties = {
       width,
       height,
@@ -23,7 +24,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div
         className={[
           styles["input_container"],
-          styles["primary"],
+          styles[`${stylesInput}`],
           error ? styles["error"] : "",
           className,
         ].join(" ")}

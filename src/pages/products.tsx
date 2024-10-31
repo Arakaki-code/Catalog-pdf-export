@@ -1,4 +1,4 @@
-import styles from "../styles/listProducts.module.scss";
+import styles from "../styles/products.module.scss";
 
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
@@ -11,7 +11,7 @@ import TableProducts from "../components/ListProducts/ListProducts";
 import Modal from "../components/Modal/Modal";
 import Select from "../components/Select/Select";
 import ProductForm from "../components/ProductForm/ProductForm";
-import useProducts, { Product } from "../hooks/useProducts";
+import  { Product, useProducts } from "../hooks/useProducts";
 
 export default function ListProducts() {
   const { products, filterProducts, addOrEditProduct, removeProduct } = useProducts();

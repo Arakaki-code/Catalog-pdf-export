@@ -8,7 +8,7 @@ interface CardProps {
   image?: string;
   code?: string;
   description?: string;
-  category?: string;
+  label?: string;
   price?: string | number;
   unit?: string;
   color?: string; 
@@ -23,7 +23,7 @@ const CardProduct: React.FC<CardProps> = ({
   image,
   code,
   description,
-  category,
+  label,
   unit,
   price,
   color,
@@ -42,7 +42,7 @@ const CardProduct: React.FC<CardProps> = ({
         aria-label="Editar produto"
       />
       <Button
-        btnStyle="icon_red"
+        btnStyle="icon_remove"
         icon={<MdDeleteOutline />}
         onClick={onDelete}
         aria-label="Excluir produto"
@@ -55,7 +55,7 @@ const CardProduct: React.FC<CardProps> = ({
       {image && <img src={image} alt={description} />}
       <p>{code || 'N/A'}</p>
       <p>{description || 'N/A'}</p>
-      <p>{category || 'N/A'}</p>
+      <p>{label || 'N/A'}</p>
       {renderButtonsAction()}
     </div>
   );
@@ -63,7 +63,7 @@ const CardProduct: React.FC<CardProps> = ({
   const renderCardModeCategory = () => (
     <div className={[styles.card_container_category, styles.card_box].join(" ")}>
       <p>{code || 'N/A'}</p>
-      <p>{category || 'N/A'}</p>
+      <p>{label || 'N/A'}</p>
       <ColorSelect  initialColor={color}/>
       {renderButtonsAction()}
     </div>

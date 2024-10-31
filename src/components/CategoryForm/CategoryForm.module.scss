@@ -1,0 +1,21 @@
+@import "../../styles/_variables.scss"; 
+
+.container_form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: $spacing-sm;
+
+    .content_inputs {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .content_buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: $spacing-sm;
+    }
+} 

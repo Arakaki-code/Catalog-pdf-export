@@ -100,7 +100,7 @@ const initialProducts: Product[] = [
   },
 ];
 
-export default function useProducts() {
+export function useProducts() {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [variation, setVariation] = useState<ProductVariation>(
     {
@@ -127,11 +127,8 @@ export default function useProducts() {
   // Adicionar ou editar um produto
   const addOrEditProduct = useCallback(
     (product: Product, editingProduct?: Product) => {
-      setProducts((prev) =>
-        editingProduct
-          ? prev.map((p) =>
-              p.id === editingProduct.id ? { ...product, id: p.id } : p
-            )
+      setProducts((prev) => editingProduct
+          ? prev.map((p) => p.id === editingProduct.id ? { ...product, id: p.id } : p)
           : [...prev, { ...product, id: prev.length + 1 }]
       );
     },
