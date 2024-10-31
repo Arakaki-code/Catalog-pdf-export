@@ -1,10 +1,13 @@
 import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { CategoryOption, useCategory } from "../../hooks/useCategory";
+import { generateUniqueCode } from "../../utils/utils";
 
 import styles from "./CategoryForm.module.scss";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Divisor from "../DivisorLine/DivisorLine";
+import ColorSelect from "../ColorSelect/ColorSelect";
+import useValidation from "@/src/hooks/useValidation";
 
 interface CategoryFormProps {
   initialCategory?: CategoryOption;
@@ -19,8 +22,16 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
   submitButtonLabel,
   onCancel,
 }) => {
-  const [categoryData, setCategoryData] = useState<CategoryOption>({ ...initialCategory,  code: "", value: "", label: "", color: "" });
-  const { generateCode, formatLabelToValue } = useCategory();
+  const [categoryData, setCategoryData] = useState<CategoryOption>({
+    ...initialCategory,
+    code: "",
+    value: "",
+    label: "",
+    color: "",
+  });
+  const { formatLabelToValue } = useCategory();
+  const { categoryValidate, categoryErrors, setCategoryErrors } =
+    useValidation();
 
   useEffect(() => {
     if (initialCategory) {
@@ -29,24 +40,38 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
       setCategoryData({ code: "", value: "", label: "", color: "" });
     }
   }, [initialCategory]);
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setCategoryData((prev) => ({ ...prev, [name]: value }));
+
+    if (categoryErrors[name]) {
+      setCategoryErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleColorChange = (color: string) => {
+    setCategoryData((prev) => ({ ...prev, color }));
+
+    if (categoryErrors["color"]) {
+      setCategoryErrors((prev) => ({ ...prev, color: "" }));
+    }
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const formattedLabel = formatLabelToValue(categoryData.label);
+
     const newCategory = {
       ...categoryData,
       value: formattedLabel,
-      code: categoryData.code || generateCode(), 
+      code: categoryData.code || generateUniqueCode(),
     };
-    onSubmit(newCategory);
 
-    console.log(newCategory);
+    if (categoryValidate(newCategory)) {
+      onSubmit(newCategory);
+    }
   };
 
   return (
@@ -59,15 +84,13 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
           value={categoryData.label}
           onChange={handleChange}
           placeholder="Nome da categoria"
+          error={categoryErrors.label}
         />
-        <Input
-          type="color"
-          name="color"
-          label="Cor"
-          value={categoryData.color}
-          onChange={handleChange}
-          placeholder="Cor"
-          stylesInput="color_input"
+        <ColorSelect
+          initialColor={categoryData.color}
+          onColorChange={handleColorChange}
+          isEdit={true}
+          error={categoryErrors["color"]}
         />
       </div>
       <Divisor />

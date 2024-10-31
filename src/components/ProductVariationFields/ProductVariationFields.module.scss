@@ -1,0 +1,16 @@
+// components/ProductForm/ProductVariationFields.module.scss
+@import "../../styles/variables";
+
+.container{
+  h4 {
+    color: $color-text-primary-dark;
+    margin-bottom: 10px;
+  }
+}
+
+.product_variation_fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 15px;
+}

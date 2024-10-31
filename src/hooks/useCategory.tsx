@@ -19,16 +19,13 @@ export function useCategory() {
   const [selectedCategory, setSelectedCategory] = useState<string >("");
   const[categories, setCategories] = useState<CategoryOption[]>(initialCategories);
   
-  const generateCode = () => {
-    return Math.random().toString(36).substring(2, 8); // Gera um código de 6 caracteres
-  };
 
   const formatLabelToValue = (label: string) =>
     label
-      .normalize("NFD") // Decompõe acentos
-      .replace(/[\u0300-\u036f]/g, "") // Remove acentos
-      .toLowerCase() // Converte para minúsculas
-      .replace(/\s+/g, "-"); // Substitui espaços por hífens
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") 
+      .toLowerCase() 
+      .replace(/\s+/g, "-"); 
 
   const handleCategory = (value: string) => {
     setSelectedCategory(value);
@@ -53,6 +50,10 @@ export function useCategory() {
     );
   };
 
+  const removeCategory = (code: string) => {
+    setCategories((prev) => prev.filter((category) => category.code !== code));
+  }
+
 
 
   return {
@@ -64,7 +65,7 @@ export function useCategory() {
     setCategories,
     addCategory,
     editedCategory,
-    generateCode,
     formatLabelToValue,
+    removeCategory,
   };
 }

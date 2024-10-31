@@ -3,7 +3,7 @@ import CardProduct from "../Card/Card";
 import DropdownCard from "../DropdownCard/DropdownCard";
 import styles from "./ListVariations.module.scss";
 import { Product, ProductVariation } from "@/src/hooks/useProducts";
-
+import { formatCurrency } from "@/src/utils/utils";
 interface ListVariationsProps {
   productForm: Product; 
   setProductForm: (data: Product) => void; 

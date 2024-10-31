@@ -5,3 +5,17 @@
     height: 24px;
     border-radius: 50%;
   }
+
+  .error {
+    input {
+      padding: 0;
+      border-bottom: 1px solid $color-error;
+    }
+  }
+
+  .error_message {
+    color: $color-error;
+    font-size: $font-size-xs;
+    letter-spacing: $letter-spacing-light;
+    margin-top: 4px;
+  }

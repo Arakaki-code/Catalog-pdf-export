@@ -9,47 +9,68 @@ import Modal from "../components/Modal/Modal";
 import CategoryForm from "../components/CategoryForm/CategoryForm";
 
 export default function Category() {
-  const { categories, addCategory, editedCategory } = useCategory();
+  const { categories, addCategory, editedCategory, removeCategory } = useCategory();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] =
-    useState<CategoryOption | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
+  
 
   const openModal = (category?: CategoryOption) => {
     setSelectedCategory(category || null);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const resetSelectedCategory = () => {
     setIsModalOpen(false);
     setSelectedCategory(null);
   };
 
   const handleEdit = (code: string) => {
-    const categoryToEdit = categories.find((cat) => cat.code === code);
-
-    if (categoryToEdit) {
+    try {
+      const categoryToEdit = categories.find((cat) => cat.code === code);
+      if (!categoryToEdit) throw new Error("Categoria não encontrada para edição.");
+  
       setSelectedCategory({ ...categoryToEdit });
       openModal(categoryToEdit);
-    } else {
-      console.error("Categoria não encontrada para edição.");
-      console.error("Codigo ", categories.find((cat) => cat.code === code));
+    } catch (error) {
+      console.error(error);
     }
   };
 
+  const handleDelete = (code: string) => {
+    removeCategory(code)
+
+  };
+  
+
   const handleFormSubmit = (categoryData: CategoryOption) => {
     if (selectedCategory?.code) {
-      // Atualiza a categoria existente
       editedCategory(selectedCategory.code, categoryData);
       const updatedCategory = categories.find(
         (cat) => cat.code === selectedCategory.code
       );
-      setSelectedCategory(updatedCategory || null); // Atualiza o estado com a categoria editada
+      setSelectedCategory(updatedCategory || null); 
     } else {
-      // Adiciona uma nova categoria
       addCategory(categoryData);
     }
-    closeModal();
+    resetSelectedCategory();
   };
+
+  const renderModal = () => (
+    isModalOpen && (
+      <Modal
+        onClose={resetSelectedCategory}
+        title={selectedCategory ? "Editar Categoria" : "Adicionar Categoria"}
+      >
+        <CategoryForm
+          initialCategory={selectedCategory || undefined}
+          onSubmit={handleFormSubmit}
+          onCancel={resetSelectedCategory}
+          submitButtonLabel={selectedCategory ? "Salvar Alterações" : "Adicionar Categoria"}
+        />
+      </Modal>
+    )
+  );
+  
 
   return (
     <div className={styles.container_category}>
@@ -68,23 +89,10 @@ export default function Category() {
       <ListCategory
         categories={categories}
         onEdit={handleEdit}
-        onDelete={(code) => console.log("Deletar", code)}
+        onDelete={handleDelete}
       />
 
-      {isModalOpen && (
-        <Modal
-          onClose={closeModal}
-          title={selectedCategory ? "Editar Categoria" : "Adicionar Categoria"}
-        >
-          <CategoryForm
-            initialCategory={selectedCategory || undefined}
-            onSubmit={handleFormSubmit}
-            submitButtonLabel={
-              selectedCategory ? "Salvar Alterações" : "Adicionar Categoria"
-            }
-          />
-        </Modal>
-      )}
+      {renderModal()}
     </div>
   );
 }

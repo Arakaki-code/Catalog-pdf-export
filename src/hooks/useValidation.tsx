@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Product, ProductVariation } from './useProducts'
+import { CategoryOption } from './useCategory';
 
 interface ValidationErrors {
   [key: string]: string;
@@ -9,6 +10,7 @@ const useValidation = () => {
 
   const [variationErrors, setVariationErrors] = useState<ValidationErrors>({});
   const [productErrors, setProductErrors] = useState<ValidationErrors>({});
+  const [categoryErrors, setCategoryErrors] = useState<ValidationErrors>({});
 
 
   const variationValidate = useCallback((variation: ProductVariation) => {
@@ -50,7 +52,24 @@ const useValidation = () => {
     return Object.keys(validationErrors).length === 0;
   }, []);
 
-  return { variationErrors, variationValidate, setVariationErrors, productValidate, productErrors, setProductErrors };
+
+  const categoryValidate = useCallback((category: CategoryOption) => {
+    const validationErrors: ValidationErrors = {};
+
+    if (!category.label) {
+      validationErrors.label = 'Categoria necessária.';
+    }
+
+    if (!category.color) {
+      validationErrors.color = 'Cor necessária.';
+    }
+
+    setCategoryErrors(validationErrors);
+    return Object.keys(validationErrors).length === 0;
+  }, []);
+
+
+  return { variationErrors, variationValidate, setVariationErrors, productValidate, productErrors, setProductErrors, categoryValidate, categoryErrors, setCategoryErrors };
 };
 
 export default useValidation;

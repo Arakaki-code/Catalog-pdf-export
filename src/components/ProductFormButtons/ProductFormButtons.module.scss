@@ -1,0 +1,8 @@
+// components/ProductForm/ProductFormButtons.module.scss
+@import "../../styles/variables";
+
+.buttons_form {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
