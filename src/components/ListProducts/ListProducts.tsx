@@ -1,15 +1,38 @@
-import styles from "./ListProducts.module.scss";
-import CardProduct from "../Card/Card";
-import {Product} from "../../hooks/useProducts";
+// components/ListProducts/ListProducts.tsx
+import React, { useState } from 'react';
+import styles from './ListProducts.module.scss';
+import CardProduct from '../Card/Card';
+import { Product } from '../../hooks/useProducts';
+import AlertDialog from '../AlertDialog/AlertDialog';
 
 interface ListProductsProps {
   products: Product[];
   onEdit: (code: string) => void;
   onDelete: (code: string) => void;
+  highlightedProduct: { code: string; type: "add" | "edit" | "delete" } | null;
 }
 
-export default function ListProducts({ products, onEdit, onDelete }: ListProductsProps) {
+export default function ListProducts({ products, onEdit, onDelete, highlightedProduct }: ListProductsProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
+  const handleDeleteClick = (code: string) => {
+    setProductToDelete(code);
+    setIsDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (productToDelete) {
+      onDelete(productToDelete); 
+    }
+    setIsDialogOpen(false);
+    setProductToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setIsDialogOpen(false);
+    setProductToDelete(null);
+  };
 
   return (
     <div className={styles.tableProducts}>
@@ -32,13 +55,25 @@ export default function ListProducts({ products, onEdit, onDelete }: ListProduct
               description={product.description}
               label={product.category}
               onEdit={() => onEdit(product.code)}
-              onDelete={() => onDelete(product.code)}
+              onDelete={() => handleDeleteClick(product.code)}
+              highlightType={
+                highlightedProduct?.code === product.code
+                  ? highlightedProduct.type
+                  : undefined
+              }
             />
           ))
         ) : (
           <p className={styles.noProducts}>Nenhum produto encontrado.</p>
         )}
       </div>
+
+      <AlertDialog
+        isOpen={isDialogOpen}
+        message="Você tem certeza que deseja excluir este produto?"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+      />
     </div>
   );
 }

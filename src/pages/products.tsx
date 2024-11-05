@@ -4,32 +4,35 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { MdCategory } from "react-icons/md";
 import { useCategory } from "../hooks/useCategory";
-import {optionsCategory} from "../utils/utils";
+import { Product, useProducts } from "../hooks/useProducts";
+import { optionsCategory } from "../utils/utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Button from "../components/Button/Button";
-import TableProducts from "../components/ListProducts/ListProducts";
+import ListProducts from "../components/ListProducts/ListProducts"; 
 import Modal from "../components/Modal/Modal";
 import Select from "../components/Select/Select";
 import ProductForm from "../components/ProductForm/ProductForm";
-import  { Product, useProducts } from "../hooks/useProducts";
 
-export default function ListProducts() {
+
+export default function products() {
   const { products, filterProducts, addOrEditProduct, removeProduct } = useProducts();
-  const {
-    getCategoryLabel,
-    selectedCategory,
-    handleCategory,
-  } = useCategory();
+  const { getCategoryLabel, selectedCategory, handleCategory } = useCategory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [highlightedProduct, setHighlightedProduct] = useState<{ code: string; type: "add" | "edit" | "delete" } | null>(null);
+
+  const notifyAddProduct = () => toast.success("Produto adicionado!");
+  const notifyEditProduct = () => toast.success("Produto editado!");
 
 
   const openModal = (product?: Product) => {
     if (product) {
-      setEditingProduct(product); // Modo de edição
+      setEditingProduct(product);
     } else {
-      setEditingProduct(null); // Modo de adição
+      setEditingProduct(null);
     }
     setIsModalOpen(true);
   };
@@ -39,29 +42,48 @@ export default function ListProducts() {
     setEditingProduct(null);
   };
 
-
   const handleFormSubmit = (productData: Product) => {
     const productWithVariations = {
       ...productData,
-      variations: productData.variations || [], 
+      variations: productData.variations || [],
     };
     addOrEditProduct(productWithVariations, editingProduct || undefined);
+
+  
+    setHighlightedProduct({
+      code: productWithVariations.code,
+      type: editingProduct ? "edit" : "add",
+    });
+    setTimeout(() => {
+      setHighlightedProduct(null); 
+    }, 1000);
+
+    if (editingProduct) {
+      notifyEditProduct();
+    } else {
+      notifyAddProduct();
+    }
+
     closeModal();
   };
 
   const handleEdit = (code: string) => {
-    const productToEdit = products.find(product => product.code === code);
+    const productToEdit = products.find((product) => product.code === code);
     openModal(productToEdit);
   };
-
   const handleDelete = (code: string) => {
     removeProduct(code);
+
   };
 
   return (
     <div className={styles.listProducts}>
       <div className={styles.listProducts_header}>
-        {getCategoryLabel() !== "Todas Categorias" ? <h2>{getCategoryLabel()}</h2> : <h2>Todos os produtos</h2>}
+        {getCategoryLabel() !== "Todas Categorias" ? (
+          <h2>{getCategoryLabel()}</h2>
+        ) : (
+          <h2>Todos os produtos</h2>
+        )}
         <div className={styles.header_buttons}>
           <Select
             options={optionsCategory}
@@ -83,22 +105,30 @@ export default function ListProducts() {
       </div>
 
       <div className={styles.listProducts_content}>
-      <TableProducts
+        <ListProducts
           products={filterProducts(selectedCategory)}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          highlightedProduct={highlightedProduct} // Passa o highlightedProduct para o ListProducts
         />
       </div>
 
       {isModalOpen && (
-        <Modal onClose={closeModal} title={editingProduct ? "Editar produto" : "Adicionar produto"}>
+        <Modal
+          onClose={closeModal}
+          title={editingProduct ? "Editar produto" : "Adicionar produto"}
+        >
           <ProductForm
             initialData={editingProduct || undefined}
             onSubmit={handleFormSubmit}
-            submitButtonLabel={editingProduct ? 'Salvar produto' : 'Adicionar Produto'}
+            submitButtonLabel={
+              editingProduct ? "Salvar produto" : "Adicionar Produto"
+            }
           />
         </Modal>
       )}
+
+      <ToastContainer position="bottom-left" autoClose={4500} />
     </div>
   );
 }

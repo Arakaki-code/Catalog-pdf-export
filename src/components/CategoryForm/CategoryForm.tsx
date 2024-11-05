@@ -22,6 +22,8 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
   submitButtonLabel,
   onCancel,
 }) => {
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [categoryData, setCategoryData] = useState<CategoryOption>({
     ...initialCategory,
     code: "",
@@ -39,7 +41,14 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
     } else {
       setCategoryData({ code: "", value: "", label: "", color: "" });
     }
+
   }, [initialCategory]);
+
+  useEffect(() => {
+    const hasChanges = JSON.stringify(categoryData) !== JSON.stringify(initialCategory);
+    setIsButtonDisabled(!hasChanges);
+  }, [categoryData, initialCategory]);
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -107,6 +116,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({
           width="160px"
           btnStyle="btn_borderline"
           className={styles.button_save}
+          disabled={isButtonDisabled}
         >
           {submitButtonLabel || "Salvar"}
         </Button>

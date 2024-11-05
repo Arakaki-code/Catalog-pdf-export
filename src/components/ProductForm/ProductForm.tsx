@@ -1,7 +1,7 @@
-// components/ProductForm/ProductForm.tsx
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Product, ProductVariation } from "../../hooks/useProducts";
 import { generateUniqueCode } from "../../utils/utils";
+
 import styles from "./ProductForm.module.scss";
 import ProductMainFields from "../ProductMainFields/ProductMainFields";
 import ProductVariationFields from "../ProductVariationFields/ProductVariationFields";
@@ -29,6 +29,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
   submitButtonLabel = "Salvar",
 }) => {
   const [formData, setFormData] = useState<Product>(initialData);
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true);
   const [newVariation, setNewVariation] = useState<ProductVariation>({
     code: "",
     description: "",
@@ -45,7 +46,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
     setVariationErrors,
   } = useValidation();
 
-  const isSaveButtonDisabled = formData.variations?.length === 0;
 
   const addVariation = () => {
     if (!variationValidate(newVariation)) return;
@@ -77,9 +77,19 @@ const ProductForm: React.FC<ProductFormProps> = ({
     };
 
     if (productValidate(productWithCode)) {
-      onSubmit(productWithCode); // Envia o formulário se válido
+      onSubmit(productWithCode);
     }
   };
+
+  const hasChanges = (a: Product, b: Product) => {
+    return JSON.stringify(a) !== JSON.stringify(b);
+  };
+
+  useEffect(() => {
+    setIsSaveButtonDisabled(formData.variations.length === 0 || !hasChanges(formData, initialData));
+  }, [formData, initialData]);
+
+  
 
   return (
     <form className={styles.formulario} onSubmit={handleSubmit}>
@@ -91,7 +101,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       />
 
       <Divisor />
-      
+
       <ProductVariationFields
         newVariation={newVariation}
         setNewVariation={setNewVariation}

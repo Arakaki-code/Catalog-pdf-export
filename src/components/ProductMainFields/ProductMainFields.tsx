@@ -1,4 +1,3 @@
-// components/ProductForm/ProductMainFields.tsx
 import React from "react";
 import Input from "../Input/Input";
 import Select from "../Select/Select";

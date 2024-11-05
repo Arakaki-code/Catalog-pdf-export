@@ -14,9 +14,10 @@ interface CardProps {
   color?: string; 
   onEdit: () => void;
   onDelete: () => void;
-  btnStyle?: string; // Se necessário para estilização
+  btnStyle?: string; 
   isCardModeCategory?: boolean;
   isVariationMode?: boolean;
+  highlightType?: "add" | "edit" | "delete";
 }
 
 const CardProduct: React.FC<CardProps> = ({
@@ -31,7 +32,13 @@ const CardProduct: React.FC<CardProps> = ({
   onDelete,
   isCardModeCategory = false,
   isVariationMode = false,
+  highlightType,
 }) => {
+
+ 
+  const highlightClass = highlightType ? styles[`highlight-${highlightType}`] : "";
+  const cardClass = `${styles.card_container} ${highlightClass}`;
+  
 
   const renderButtonsAction = () => (
     <div className={styles.actions}>
@@ -64,7 +71,7 @@ const CardProduct: React.FC<CardProps> = ({
     <div className={[styles.card_container_category, styles.card_box].join(" ")}>
       <p>{code || 'N/A'}</p>
       <p>{label || 'N/A'}</p>
-      <ColorSelect  initialColor={color}/>
+      <ColorSelect initialColor={color}/>
       {renderButtonsAction()}
     </div>
   );
@@ -80,7 +87,7 @@ const CardProduct: React.FC<CardProps> = ({
   );
 
   return (
-    <div className={styles.card_container}>
+    <div className={[cardClass].join(" ")}>
       {isVariationMode
         ? renderCardModeVariations()
         : isCardModeCategory

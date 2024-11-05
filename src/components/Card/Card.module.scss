@@ -9,60 +9,74 @@
   box-shadow: $shadow-md;
   margin-bottom: $spacing-sm;
   padding: $spacing-sm $spacing-md;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   z-index: 10;
 
-  &:hover{
 
-    box-shadow: none;
+  &.highlight-add {
+    background-color: #e9f4fe;
+    transform: scale(1.02); 
   }
 
-  .card_box{
+  &.highlight-edit {
+    background-color: #e9f4fe;
+    box-shadow: 0px 0px 10px 0px  #09094a40;
+  }
+
+
+  
+  .card_box {
     overflow: hidden;
     gap: 10px;
+
     img {
       object-fit: contain;
       overflow: hidden;
     }
-    
-  }     
-  
-    .actions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  
+  }
 
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .card_container_product {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 2fr 1fr ;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
     align-items: center;
     text-align: left;
   }
-  
- 
 
   .card_container_category {
-
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr 2fr 1fr;
     align-items: center;
     text-align: left;
   }
-  
-  .card_container_variations{
+
+  .card_container_variations {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
     align-items: center;
     text-align: left;
 
-    .code{
+    .code {
       font-size: $font-size-xs;
       color: $color-text-label;
     }
+  }
+}
+
+// Animação de fade-out para exclusão
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

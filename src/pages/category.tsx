@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { CategoryOption, useCategory } from "../hooks/useCategory";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import styles from "../styles/category.module.scss";
 import ListCategory from "../components/ListCategory/ListCategory";
@@ -12,7 +14,11 @@ export default function Category() {
   const { categories, addCategory, editedCategory, removeCategory } = useCategory();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
+  const [highlightedCategory, setHighlightedCategory] = useState<{ code: string; type: "add" | "edit" | "delete" } | null>(null);
   
+  const notifyAddCategory = () => toast.success("Categoria Adicionada!");
+  const notifyEditCategory = () => toast.success("Categoria editada!");
+
 
   const openModal = (category?: CategoryOption) => {
     setSelectedCategory(category || null);
@@ -32,15 +38,13 @@ export default function Category() {
       setSelectedCategory({ ...categoryToEdit });
       openModal(categoryToEdit);
     } catch (error) {
-      console.error(error);
     }
   };
 
   const handleDelete = (code: string) => {
     removeCategory(code)
-
   };
-  
+
 
   const handleFormSubmit = (categoryData: CategoryOption) => {
     if (selectedCategory?.code) {
@@ -52,6 +56,24 @@ export default function Category() {
     } else {
       addCategory(categoryData);
     }
+
+    if(selectedCategory) {
+      notifyEditCategory();
+    } else {
+      notifyAddCategory();
+    }
+
+    setHighlightedCategory({
+      code: categoryData.code,
+      type: selectedCategory ? "edit" : "add",
+    })
+    setTimeout(() => {
+      setHighlightedCategory(null); 
+    }, 1000);
+
+    
+    
+
     resetSelectedCategory();
   };
 
@@ -74,6 +96,7 @@ export default function Category() {
 
   return (
     <div className={styles.container_category}>
+
       <div className={styles.category_header}>
         <h2>Lista de Categorias</h2>
         <Button
@@ -90,9 +113,15 @@ export default function Category() {
         categories={categories}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        highlightedProduct={highlightedCategory}
       />
 
       {renderModal()}
+
+      <ToastContainer
+        position="bottom-left"
+        autoClose={4500}
+      />
     </div>
   );
 }

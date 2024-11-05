@@ -111,7 +111,6 @@ export function useProducts() {
     },
   );
 
-  // Função para filtrar produtos por categoria
   const filterProducts = useCallback(
     (selectedCategory: string | number) => {
       if (!selectedCategory) return products;
@@ -124,7 +123,6 @@ export function useProducts() {
     [products]
   );
 
-  // Adicionar ou editar um produto
   const addOrEditProduct = useCallback(
     (product: Product, editingProduct?: Product) => {
       setProducts((prev) => editingProduct
@@ -135,7 +133,6 @@ export function useProducts() {
     []
   );
 
-  // Remover um produto
   const removeProduct = useCallback((code: string) => {
     setProducts((prev) => prev.filter((product) => product.code !== code));
   }, []);

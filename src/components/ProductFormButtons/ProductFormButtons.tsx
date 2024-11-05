@@ -1,4 +1,3 @@
-// components/ProductForm/ProductFormButtons.tsx
 import React from "react";
 import Button from "../Button/Button";
 import { GiSaveArrow } from "react-icons/gi";
